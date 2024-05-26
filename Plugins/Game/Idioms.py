@@ -15,7 +15,7 @@ allIdiomsPinyin = {}
 allIdioms = []
 idiomsDict = {}
 
-with open(idiomsRepoFilePath, encoding='gbk') as idiomsFile:
+with open(idiomsRepoFilePath, encoding='utf-8') as idiomsFile:
     while True:
         line = idiomsFile.readline()
         if line == "":

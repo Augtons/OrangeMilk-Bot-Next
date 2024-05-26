@@ -9,7 +9,8 @@ current_game: dict[int, tuple[str, BaseGame]] = {}
 async def startGameByName(bot: Bot, group_id: int, args: list[str]) -> Message:
     if (group_id in current_game):
         return MessageSegment.text(f"""本群当前正在进行 "{current_game[group_id][0]}" 游戏哦""")
-        
+
+    # 成语接龙
     if (args[0] == Idioms.name or args[0] in Idioms.alias):
         try:
             game = Idioms.IdiomsGame(bot, group_id)
@@ -28,3 +29,8 @@ def stopGameByName(group_id: int, name: str) -> Message:
     logger.info("群({})中的游戏{}结束".format(group_id, name))
     if (group_id in current_game and current_game[group_id][0] == name):
         del current_game[group_id]
+
+def getAllGamesName() -> list[str]:
+    return [
+        Idioms.name,  # 成语接龙
+    ]

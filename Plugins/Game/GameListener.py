@@ -15,7 +15,11 @@ async def _(bot: Bot, event: GroupMessageEvent):
         await game_starter.finish()
 
     if (len(args) == 0):
-        await game_starter.finish("请输入游戏名！")
+        msg = "请输入“/game 游戏名”以启动群游戏！\n\n当前支持的游戏：\n"
+        for index, name in enumerate(GameManager.getAllGamesName()):
+            msg += f"【{index + 1}】 {name}\n"
+
+        await game_starter.finish(msg)
 
     ret = await GameManager.startGameByName(bot, event.group_id, args)
     await game_starter.finish(ret)

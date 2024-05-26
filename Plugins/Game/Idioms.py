@@ -73,11 +73,13 @@ class IdiomsGame(BaseGame):
 
     #[Override]
     async def finish(self):
+        global name
         await super().finish()
         self.matcher.destroy()
         await self.send(
             MessageSegment.text("游戏结束！\n\n【排名】\n") +
-            await self.getRank()
+            await self.getRank() +
+            MessageSegment.text(f"\n\n输入 /game {name} 重新开始")
         )
         atMsgs = functools.reduce(lambda a, b: a + b, (MessageSegment.at(qq) for qq in self.players.keys()))
         await self.send(atMsgs)

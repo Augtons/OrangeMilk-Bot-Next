@@ -41,7 +41,7 @@ with open(idiomsRepoFilePath, encoding='utf-8') as idiomsFile:
                 idiomsDict[rawPinyin[0]] = []
             idiomsDict[rawPinyin[0]].append(idiom)
 
-logger.info(f"成语注入完毕，共 {len(allIdiomsPinyin)} 个成语")
+logger.info(f"[Game]成语接龙: 成语注入完毕，共 {len(allIdiomsPinyin)} 个成语")
 
 
 

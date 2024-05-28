@@ -21,6 +21,8 @@ words = []
 with closing(poetry_database.cursor()) as cursor:
     cursor.execute("select word from fhl_words")
     words = [row[0] for row in cursor]
+    poetry_sentence_count = cursor.execute("select count(*) from fhl_poetry").fetchall()[0][0]
+    logger.info(f"[Game]飞花令: Keywords 注入完毕, 共 {len(words)} 个 Keywords, {poetry_sentence_count}个子诗句")
 
 @dataclass
 class PoetrySentence():

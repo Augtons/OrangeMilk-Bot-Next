@@ -47,9 +47,7 @@ logger.info(f"成语注入完毕，共 {len(allIdiomsPinyin)} 个成语")
 
 class IdiomsGame(BaseGame):
     def __init__(self, bot: Bot, groupId):
-        super().__init__()
-        self.bot = bot
-        self.group_id = groupId
+        super().__init__(bot=bot, groupId=groupId)
         self.matcher = on(rule=is_type(GroupMessageEvent))
         self.currentIdiom = random.choice(allIdioms)
         self.timer = None
@@ -85,19 +83,6 @@ class IdiomsGame(BaseGame):
         await self.send(atMsgs)
         if (self.timer != None):
             self.timer.cancel()
-
-    async def getRank(self):
-        scores = [item for item in self.players.items()]
-        scores.sort(key=lambda item: -item[1])
-        ranks = []
-        for index, (qq, score) in enumerate(scores):
-            info = await self.bot.get_group_member_info(group_id=self.group_id, user_id=qq, no_cache=True)
-            name = info["card"] if ("card" in info and info["card"] != None) else info["nickname"]
-            ranks.append((index + 1, name, score))
-        if (len(ranks) > 0):
-            return "\n".join(("【{}】{}\n    得分: {}".format(rank, name, score) for (rank, name, score) in ranks))
-        else:
-            return "暂无排名"
 
     async def timer_coroutine(self):
         while self.remainTime >= 1:

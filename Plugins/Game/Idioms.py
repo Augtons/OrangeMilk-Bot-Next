@@ -1,4 +1,4 @@
-import os, re, random, asyncio
+import os, re, random, asyncio, time, math
 import functools
 from nonebot import *
 from nonebot.rule import *
@@ -52,7 +52,13 @@ class IdiomsGame(BaseGame):
         self.currentIdiom = random.choice(allIdioms)
         self.timer = None
         self.remainTime = 120
+        self.startTime = int(time.time())
         pass
+
+    def calculate_running_time(self):
+        """计算游戏时长（分钟）"""
+        elapsed_time = int(time.time()) - self.startTime
+        return math.ceil(elapsed_time / 60)
 
     async def send(self, msg):
         await self.bot.send_group_msg(group_id=self.group_id, message=msg)
@@ -77,7 +83,7 @@ class IdiomsGame(BaseGame):
         await self.send(
             MessageSegment.text("游戏结束！\n\n【排名】\n") +
             await self.getRank() +
-            MessageSegment.text(f"\n\n输入 /game {name} 重新开始")
+            MessageSegment.text(f"\n\n本次游戏时长: {self.calculate_running_time()}分钟\n输入“/game {name}”重新开始")
         )
         atMsgs = functools.reduce(lambda a, b: a + b, (MessageSegment.at(qq) for qq in self.players.keys()))
         await self.send(atMsgs)
@@ -88,7 +94,7 @@ class IdiomsGame(BaseGame):
         while self.remainTime >= 1:
             self.remainTime -= 1
             if (self.remainTime == 60):
-                await self.send(f"还剩一分钟了\n\n当前成语是: {self.currentIdiom}({allIdiomsPinyin[self.currentIdiom][-1]})")
+                await self.send(f"还剩一分钟了\n\n输入“排名”可查看当前排名\n当前成语是: {self.currentIdiom}({allIdiomsPinyin[self.currentIdiom][-1]})")
             elif (self.remainTime == 30):
                 await self.send(f"还剩 30 秒了");
             elif (self.remainTime == 0):
@@ -111,7 +117,7 @@ class IdiomsGame(BaseGame):
             await self.matcher.finish(
                 MessageSegment.text("当前排名: \n") +
                 MessageSegment.text(await self.getRank()) +
-                MessageSegment.text(f"\n当前成语: {self.currentIdiom}({allIdiomsPinyin[self.currentIdiom][-1]})")
+                MessageSegment.text(f"\n\n游戏已进行 {self.calculate_running_time()} 分钟\n当前成语: {self.currentIdiom}({allIdiomsPinyin[self.currentIdiom][-1]})")
             )
         
         if msg in idiomsDict[allIdiomsPinyin[self.currentIdiom][-1]]:
@@ -120,6 +126,6 @@ class IdiomsGame(BaseGame):
             self.addScore(event.user_id, +1.0)
             await self.matcher.finish(
                 MessageSegment.text("恭喜 ") + MessageSegment.at(str(event.user_id)) + " 回答正确" + MessageSegment.face(178) +
-                f"\n当前分数为{self.players[event.user_id]} (+1.0)\n\n" +
+                f"\n当前分数为 {self.players[event.user_id]} (+1.0)\n\n" +
                 f"新成语: {self.currentIdiom}({allIdiomsPinyin[self.currentIdiom][-1]})"
             )

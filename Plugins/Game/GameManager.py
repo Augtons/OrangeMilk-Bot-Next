@@ -2,7 +2,7 @@ import traceback
 from nonebot import *
 from nonebot.adapters.onebot.v11 import *
 from .BaseGame import BaseGame
-from . import Idioms
+from . import Idioms, Poetry
 
 current_game: dict[int, tuple[str, BaseGame]] = {}
 
@@ -21,6 +21,18 @@ async def startGameByName(bot: Bot, group_id: int, args: list[str]) -> Message:
         except Exception as e:
             traceback.print_exception(e)
             return MessageSegment.text("游戏初始化失败")
+        
+    # 飞花令
+    if (args[0] == Poetry.name or args[0] in Poetry.alias):
+        try:
+            game = Poetry.PoetryGame(bot, group_id)
+            game.onFinishCallback = lambda: stopGameByName(group_id, Poetry.name)
+            current_game[group_id] = (Poetry.name, game)
+            await game.start()
+            return None
+        except Exception as e:
+            traceback.print_exception(e)
+            return MessageSegment.text("游戏初始化失败")
     
     return MessageSegment.text("未找到此游戏名: {}".format(args[0]))
 
@@ -33,4 +45,5 @@ def stopGameByName(group_id: int, name: str) -> Message:
 def getAllGamesName() -> list[str]:
     return [
         Idioms.name,  # 成语接龙
+        Poetry.name,  # 飞花令
     ]

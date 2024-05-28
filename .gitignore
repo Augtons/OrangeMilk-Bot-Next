@@ -1,2 +1,12 @@
+# IDE
+.idea
+.vscode
+.vs
+
+# Python
 __pycache__
 .venv
+
+# SQlite
+*.db
+*.sql

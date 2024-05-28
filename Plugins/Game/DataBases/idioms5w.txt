@@ -8531,7 +8531,7 @@
 刨根究底|páo gēn jiū dǐ
 刨根问底|páo gēn wèn dǐ
 利不亏义|lì bù kuī yì
-利令志惛|lì lìng zhì zào
+利令志惛|lì lìng zhì hūn
 利令智惛|lì lìng zhì hūn
 利令智昏|lì lìng zhì hūn
 利以平民|lì yǐ píng mín
@@ -13017,6 +13017,7 @@
 士别三日，刮目相待|shì bié sān rì，guā mù xiāng dài
 士别三日，当刮目相待|shì bié sān rì，dāng guā mù xiāng dài
 士可杀不可辱|shì kě shā bù kě rǔ
+士可杀，不可辱|shì kě shā bù kě rǔ
 士死知己|shì sǐ zhī jǐ
 士穷见节|shì qióng jiàn jié
 士穷见节义|shì qióng jiàn jié yì
@@ -13311,6 +13312,7 @@
 大事不糊涂|dà shì bù hú tú
 大事化小|dà shì huà xiǎo
 大事化小，小事化无|dà shì huà xiǎo，xiǎo shì huà wú
+大事化小，小事化了|dà shì huà xiǎo，xiǎo shì huà liao
 大事去矣|dà shì qù yǐ
 大事完毕|dà shì wán bì
 大事已然|dà shì yǐ rán
@@ -49645,3 +49647,4 @@
 长相厮守|chang xiang si shou
 晶莹剔透|jing ying ti tou
 策马奔腾|ce ma ben teng
+倒反天罡|dao fan tian gang

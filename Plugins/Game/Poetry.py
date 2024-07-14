@@ -147,5 +147,6 @@ class PoetryGame(BaseGame):
             f"\n当前分数为{self.players[event.user_id]} (+1.0)\n\n" +
             f"此句出自：《{poetry_sentence.book}》\n" +
             f"{poetry_sentence.sentence}\n" +
-            f"　——《{poetry_sentence.title}》({poetry_sentence.author})"
+            f"　——《{poetry_sentence.title}》({poetry_sentence.author})\n" +
+            f"请回答含有“{self.currentWord}”的诗句"
         )
